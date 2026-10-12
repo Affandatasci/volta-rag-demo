@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.tools import tool
-from langchain_groq import ChatGroq
+from langchain_anthropic import ChatAnthropic
 from langgraph.prebuilt import create_react_agent
 
 load_dotenv()
@@ -30,7 +30,7 @@ load_dotenv()
 QDRANT_URL     = os.environ["QDRANT_URL"].rstrip("/")
 QDRANT_API_KEY = os.environ["QDRANT_API_KEY"]
 COLLECTION     = os.environ.get("QDRANT_COLLECTION", "volta_demo")
-GROQ_API_KEY   = os.environ["GROQ_API_KEY"]
+ANTHROPIC_API_KEY = os.environ["ANTHROPIC_API_KEY"]
 MAIN_MODEL     = os.environ.get("MAIN_MODEL", "openai/gpt-oss-120b")
 
 # bge-small-en-v1.5 (33M params, ~130MB, 384-dim).
@@ -128,7 +128,7 @@ Rules:
   base it came from if the page number is available."""
 
 
-_model = ChatGroq(model=MAIN_MODEL, api_key=GROQ_API_KEY, temperature=0.1)
+_model = ChatAnthropic(model="claude-haiku-4-5", api_key=ANTHROPIC_API_KEY, temperature=0.1)
 try:
     _graph = create_react_agent(_model, tools=[search_knowledge_base, lookup_job],
                                 state_modifier=SYSTEM_PROMPT)

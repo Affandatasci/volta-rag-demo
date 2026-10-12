@@ -1,5 +1,5 @@
 streamlit==1.64.0
-langchain-groq>=0.2
+langchain-anthropic
 langchain>=0.3
 langgraph>=1.0,<2.0
 langchain-core
